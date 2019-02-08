@@ -1,4 +1,4 @@
-FUNCTION CaptureImages():
+FUNCTION VideoLoop():
     // Use OpenCV to attain video data
     cap = OpenCV.CaptureVideo()
     running = True
@@ -56,6 +56,29 @@ class Facial_Recognition():
         recogniser = OpenCV.GetRecogniser('LBPH') // Load Recogniser
         recogniser.read('trainner.yml') // Load Classifer
         labels = open("labels.txt", 'r') // Load Labels
-        
-        
+
+FUNCTION get_dims(image, res):
+    DIMENSIONS = {
+    "480p": (640,480),
+    "720p": (1280,720),
+    "1080p": (1920,1080),
+    "4k": (3840,2160),
+    }
+    width,height = DIMENSIONS['480p']
+    if res in DIMENSIONS:
+        width,height = DIMENSIONS[res]
+
+    change_res(cap, width, height)
+
+FUNCTION change_res(cap,width,height):
+    cap.height = height
+    cap.width = width
+
+FUNCTION setup():
+    cascade = OpenCV.GetCascade('Haar Cascade') //Load Cascade
+    recogniser = OpenCV.GetRecogniser('LBPH') // Load Recogniser
+    image_dir = path.GetDir(images) //Get path to image directory
+    cursor = dbConnect() //Connect to the database
+
+
     
