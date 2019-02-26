@@ -9,6 +9,9 @@ FUNCTION VideoLoop():
         // Display those frames to create a video loop
         OpenCV.showImage(image)
 
+        if OpenCV.keypressed = 'q':
+            break
+
 database config file:
 dbconfig.txt
 {
@@ -80,5 +83,22 @@ FUNCTION setup():
     image_dir = path.GetDir(images) //Get path to image directory
     cursor = dbConnect() //Connect to the database
 
+FUNCTION detectFace(cap,image):
+    greyIMG = OpenCV.ConvertToGrayscale(image)// Convert image to grayscale
+    faces = OpenCV.Cascade.detectFaces(greyIMG) //OpenCV detects faces in image
+    for face in faces:
+        width = face.getWidth()
+        height = face.getHeight()
+        roi = image[height,width] //region of interest of where the face is on the image
+        OpenCV.rectangle(image, width, height) //Draws rectangle around identified face
 
+FUNCTION identifyFace(face,greyIMG,image):
+    studentName,conf = recogniser.identify(greyIMG) //Identifies the face and returns a confidence level
+    if conf >= 45: //If the the confidence is greater than 45 then....
+        name = labels[studentName] // Get the student name from a list named labels
+        OpenCV.displayText(image,name)// Display onto the screen the person identified
+        displayConfirmation(studentName)
+        
     
+    
+   
