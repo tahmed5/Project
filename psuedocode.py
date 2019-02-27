@@ -48,10 +48,10 @@ FUNCTION SaveImage(image):
     OpenCV.save(path, image)
 
     //Save Path To Database
-    cursor.execute('INSERT INTO Images (ImagePath) VALUES(path)')
-    studentID = cursor.execute('SELECT StudentID FROM Students WHERE Username = username')
-    imageID = cursor.execute('SELECT imageID FROM Images where ImagePath == path')
-    cursor.execute('Insert INTO Student_Images (ImageID,StudentID) VALUES (studentID,imageID)')
+    cursor.execute('INSERT INTO Images (ImagePath) VALUES(path)') //Inserts the image path into the database
+    studentID = cursor.execute('SELECT StudentID FROM Students WHERE Username = username') // Gets the studentID
+    imageID = cursor.execute('SELECT imageID FROM Images where ImagePath == path') // Gets the imageID
+    cursor.execute('Insert INTO Student_Images (ImageID,StudentID) VALUES (studentID,imageID)') //Creates link between imageID and student
 
 class Facial_Recognition():
     FUNCTION Constructor():
@@ -97,7 +97,7 @@ FUNCTION identifyFace(face,greyIMG,image):
     if conf >= 45: //If the the confidence is greater than 45 then....
         name = labels[studentName] // Get the student name from a list named labels
         OpenCV.displayText(image,name)// Display onto the screen the person identified
-        displayConfirmation(studentName)
+        displayConfirmation(studentName) //Manual check for if student is misidentified
         
     
     
