@@ -99,6 +99,23 @@ FUNCTION identifyFace(face,greyIMG,image):
         OpenCV.displayText(image,name)// Display onto the screen the person identified
         displayConfirmation(studentName) //Manual check for if student is misidentified
         
+FUNCTION training(greyIMG, ID, labels):
+    trainingData = []
+    path = ./raspberrypi/dataset //Path to where the dataset will be saved
+    label = ID
+    if label not in labels:
+        labels[label] = ID
+        ID += 1
+    faces = OpenCV.Cascade.detectFaces(greyIMG)
+    for face in faces:
+        roi = image[height,width]
+        trainingData.append(roi)
+      
+    OpenCV.recognizer.train(trainingData)
+    OpenCV.save(path+'/trainnedDataSet)
+                
+                
+    
     
     
    
